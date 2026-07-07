@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model City {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  state     String
+  isActive  Boolean  @default(false)
+  latitude  Float?
+  longitude Float?
+  colleges  College[]
+  events    Event[]
+  createdAt DateTime @default(now())
+}
+
+model College {
+  id          String            @id @default(cuid())
+  name        String
+  slug        String            @unique
+  shortName   String?
+  cityId      String
+  city        City              @relation(fields: [cityId], references: [id])
+  events      Event[]
+  users       User[]
+  submissions EventSubmission[]
+}
+
+model Event {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  description     String?
+  startsAt        DateTime
+  endsAt          DateTime?
+  registrationDeadline DateTime?
+  format          String   @default("IN_PERSON")
+  category        String   @default("HACKATHON")
+  venue           String?
+  locality        String?
+  latitude        Float?
+  longitude       Float?
+  cityId          String
+  city            City     @relation(fields: [cityId], references: [id])
+  collegeId       String?
+  college         College? @relation(fields: [collegeId], references: [id])
+  registrationUrl String?
+  posterUrl       String?
+  prizePool       String?
+  tags            String   @default("[]")
+  sourceType      String
+  externalId      String?
+  externalUrl     String?
+  status          String   @default("APPROVED")
+  submittedById   String?
+  submittedBy     User?    @relation(fields: [submittedById], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([sourceType, externalId])
+  @@index([cityId, startsAt])
+  @@index([status])
+  @@index([category])
+}
+
+model EventSubmission {
+  id              String   @id @default(cuid())
+  title           String
+  description     String?
+  startsAt        DateTime
+  endsAt          DateTime?
+  registrationDeadline DateTime?
+  format          String   @default("IN_PERSON")
+  category        String   @default("HACKATHON")
+  venue           String?
+  locality        String?
+  cityId          String
+  collegeId       String?
+  college         College? @relation(fields: [collegeId], references: [id])
+  registrationUrl String?
+  posterUrl       String?
+  prizePool       String?
+  tags            String   @default("[]")
+  status          String   @default("PENDING")
+  reviewNotes     String?
+  reviewedAt      DateTime?
+  promotedEventId String?
+  submitterEmail  String?
+  submitterPhone  String?
+  otpVerified     Boolean  @default(false)
+  submittedById   String?
+  submittedBy     User?    @relation(fields: [submittedById], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([status])
+  @@index([cityId])
+}
+
+model User {
+  id          String            @id @default(cuid())
+  email       String?           @unique
+  phone       String?           @unique
+  name        String?
+  collegeId   String?
+  college     College?          @relation(fields: [collegeId], references: [id])
+  trustScore  Int               @default(0)
+  points      Int               @default(0)
+  badge       String?
+  events      Event[]
+  submissions EventSubmission[]
+  createdAt   DateTime          @default(now())
+}
+
+model OtpVerification {
+  id        String   @id @default(cuid())
+  contact   String
+  otp       String
+  expiresAt DateTime
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([contact])
+}
