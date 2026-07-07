@@ -1,52 +1,33 @@
-# GitHub issue templates
+# GitHub issues — copy-paste index
 
-Copy-paste each file into a new GitHub Issue (title = filename without number prefix, or use the `# Title` inside).
+**5 issues total.** No college-specific tickets — use the master college list issue for all campuses.
 
-## Milestone: MVP — usable in Bangalore
-| File | Issue title |
-|------|-------------|
-| `01-deploy-vercel-postgres.md` | Deploy Trackr to production (Vercel + Postgres) |
-| `02-daily-scrape-cron.md` | Automate daily scraping |
-| `03-real-otp-sms-email.md` | Real OTP via SMS/email |
-| `04-admin-moderation-ui.md` | Admin moderation UI |
-| `05-replace-seed-with-live-data.md` | Replace demo seed with live data |
-| `06-rvce-event-source.md` | RVCE event source |
+| # | File | GitHub issue title | Milestone |
+|---|------|-------------------|-----------|
+| 1 | `01-mvp-launch.md` | MVP launch — deploy, auth, admin, live data | MVP |
+| 2 | `02-bangalore-colleges-master-list.md` | Bangalore colleges & venues — master source list | Data coverage |
+| 3 | `03-data-pipeline-scrapers.md` | Data pipeline — scrapers, cron, ingest rules | Data coverage |
+| 4 | `04-community-growth.md` | Community — scouts, gamification, distribution | Community |
+| 5 | `05-polish-and-scale.md` | Product polish & multi-city scale | Scale |
 
-## Milestone: Data coverage
-| File | Issue title |
-|------|-------------|
-| `07-meetup-scraper.md` | Meetup scraper |
-| `08-unstop-general-scraper.md` | General Unstop scraper |
-| `09-more-college-scrapers.md` | BMSCE, IIIT-B, Christ, DSCE scrapers |
+## Create with GitHub CLI
 
-## Milestone: Community & retention
-| File | Issue title |
-|------|-------------|
-| `10-gamification-scout-badges.md` | Gamification & badges |
-| `11-telegram-bot-weekly-digest.md` | Telegram bot |
-| `12-past-edition-notes.md` | Past-edition notes |
-| `13-team-finding-board.md` | Team-finding board |
-| `14-verified-organizer-accounts.md` | Verified organizer accounts |
+```powershell
+cd "c:\Users\Pranav\Desktop\Pranav\trackr"
 
-## Milestone: Distribution
-| File | Issue title |
-|------|-------------|
-| `16-campus-ambassador-program.md` | Campus ambassador program |
-| `17-launch-distribution-checklist.md` | Launch distribution checklist |
-
-## Milestone: Polish / Scale
-| File | Issue title |
-|------|-------------|
-| `15-feed-polish-trust-signals.md` | Feed polish & trust signals |
-| `18-city-expansion.md` | City expansion |
-| `19-repo-hygiene-docs.md` | Repo hygiene & docs |
-
-## Suggested labels
-`infra` · `scraper` · `feature` · `growth` · `community` · `docs` · `priority: critical` · `priority: high` · `priority: medium` · `priority: low`
-
-## Bulk create with GitHub CLI
-```bash
-gh issue create --title "Deploy Trackr to production (Vercel + Postgres)" --body-file docs/issues/01-deploy-vercel-postgres.md --label "infra,priority: critical"
+gh issue create --title "MVP launch — deploy, auth, admin, live data" --body-file docs/issues/01-mvp-launch.md
+gh issue create --title "Bangalore colleges & venues — master source list" --body-file docs/issues/02-bangalore-colleges-master-list.md
+gh issue create --title "Data pipeline — scrapers, cron, ingest rules" --body-file docs/issues/03-data-pipeline-scrapers.md
+gh issue create --title "Community — scouts, gamification, distribution" --body-file docs/issues/04-community-growth.md
+gh issue create --title "Product polish & multi-city scale" --body-file docs/issues/05-polish-and-scale.md
 ```
 
-Repeat for each file, or ask Cursor to script it.
+## Suggested labels
+`infra` · `scraper` · `data` · `feature` · `community` · `growth` · `priority: critical` · `priority: high`
+
+## Priority order
+1. MVP launch
+2. Bangalore colleges master list (fill in source URLs)
+3. Data pipeline
+4. Community & growth
+5. Polish & scale
